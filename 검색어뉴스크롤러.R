@@ -137,13 +137,111 @@ for (i in 1:length(qlist)){
       
       urls<-sapply(data, function(x) x$url)
       urls<-urls[loc]
-      datC<-data.frame(titles,urls,presses,datetime,edittime,bodies)
-      
-      write.csv(datC, file=paste0("./data/news_",qlist[i],"/news_",date,"_",pageNum,".csv"),row.names = F, fileEncoding="UTF-8")
-      
-    }
+      closeAllConnections()
 
-    
+      print("start get comment")  #여기서부터 기사의 댓글을 수집
+
+      comCnt<-c()
+      for(getCom in 1:length(urls)){
+        fortit<-strsplit(urls[getCom],"=")[[1]][6]
+
+        tryc<-0
+        comDat<-try(getComment(urls[getCom]), silent = T)
+        closeAllConnections()
+        while(tryc<=5&&class(comDat)=="try-error"){
+          comDat<-try(getComment(urls[getCom]), silent = T)
+          Sys.sleep(abs(rnorm(1)))
+          tryc<-tryc+1
+          print(paste0("try again comment num: ",pageUrli))
+        }
+
+        if(tryc>5){next}
+
+        if(is.null(comDat$result$graph)){
+          male<-"no data"
+          female<-"no data"
+          age<-data.frame(key=c(10,20,30,40,50), value="no data")
+        }else{
+          male<-comDat$result$graph$gender$male
+          female<-comDat$result$graph$gender$female
+          age<-comDat$result$graph$old[[1]][,1:2]
+          names(age)<-c("key","value")
+        }
+
+        dat<-data.frame(keyword=qlist[i],
+                        link=urls[getCom],
+                        title=titles[getCom],
+                        press=presses[getCom],
+                        datetime=datetime[getCom],
+                        edittime=edittime[getCom],
+                        content=bodies[getCom],
+                        male=male,
+                        female= female
+        )
+        dat<-data.frame(key=names(dat),value=as.character(dat[1,]))
+
+        dat<-rbind(dat,age)
+        write.csv(dat, file=paste0("./data/news_",qlist[i],"/news_",date,"_",fortit,".csv"),row.names = F,fileEncoding="UTF-8")
+
+        cnt<-comDat$result$count$comment
+
+        print(paste0("comment count: ",cnt))
+
+        if(cnt==0){
+          datC<-data.frame(newsTitle= titles[getCom],
+                           replyCount="no comment",
+                           contents= "no comment",
+                           userIdNo= "no ommnet",
+                           idProvider= "no comment",
+                           regTime= "no comment",
+                           modTime= "no comment",
+                           sympathyCount= "no comment",
+                           antipathyCount= "no comment",
+                           userBlind= "no comment",
+                           best= "no comment")
+        }
+        if(cnt>100){
+          pn<-round(cnt/100,0)+1
+          comDat<-c()
+          for(PN in 1:pn){
+            tryt<-0
+            tem<-try(getComment(urls[getCom],pageSize = 100,page = PN), silent = T)
+            while(tryt<=5&&class(tem)=="try-error"){
+              tem<-try(getComment(urls[getCom],pageSize = 100,page = PN), silent = T)
+              Sys.sleep(abs(rnorm(1)))
+              tryt<-tryt+1
+              print(paste0("try again comment: ",pageUrli))
+            }
+            closeAllConnections()
+
+            tem<-as.data.frame(tem$result$commentList)
+            if(nrow(tem)!=0){
+              tem<-tem[,c("replyCount","contents","userIdNo","idProvider",
+                          "regTime","modTime","sympathyCount","antipathyCount","userBlind","best")]
+              comDat<-rbind(comDat,tem)
+            }
+          }
+          datC<-cbind(data.frame(newsTitle= titles[getCom]),comDat)
+        }
+        if(cnt<=100&cnt>0){
+          tryt<-0
+          tem<-try(getComment(urls[getCom],pageSize = 100,page = 1), silent = T)
+          while(tryt<=5&&class(tem)=="try-error"){
+            tem<-try(getComment(urls[getCom],pageSize = 100,page = 1), silent = T)
+            Sys.sleep(abs(rnorm(1)))
+            tryt<-tryt+1
+            print(paste0("try again comment: ",pageUrli))
+          }
+          tem<-as.data.frame(tem$result$commentList)
+          tem<-tem[,c("replyCount","contents","userIdNo","idProvider",
+                      "regTime","modTime","sympathyCount","antipathyCount","userBlind","best")]
+          datC<-cbind(data.frame(newsTitle= titles[getCom]),tem)
+        }
+
+        write.csv(datC, file=paste0("./data/news_",qlist[i],"/news_",date,"_",fortit,"_comments.csv"),row.names = F,fileEncoding="UTF-8")
+      }
+                   
+    }
     
   }
   
