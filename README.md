@@ -6,6 +6,7 @@ Textminig code  about meteorological(weather) subject from twitter &amp;  blog \
 ## 카테고리뉴스(category of news)
 박찬엽님의 코드, 카테고리별로 뉴스검색 \
 search naver news which are divided by categories
+- (datakim-KMA-textminig/카테고리뉴스.md)
 
 ## 검색어뉴스크롤러(crawler from keyword)
 박찬엽님의 코드,검색어와 기간을 입력하면 뉴스와 댓글이 csv 형태로 저장됩니다  \
