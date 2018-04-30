@@ -3,7 +3,7 @@ Textminig code  about meteorological(weather) subject from twitter &amp;  blog \
 기상청에서의 텍스트마이닝 코드 기록입니다.
 
 
-## [카테고리뉴스(category of news)](datakim-KMA-textminig/카테고리뉴스.R)
+## [카테고리뉴스(category of news)](https://github.com/kim-taehee/datakim-KMA-textminig/blob/master/%EC%B9%B4%ED%85%8C%EA%B3%A0%EB%A6%AC%EB%89%B4%EC%8A%A4.R)
 박찬엽님의 코드, 카테고리별로 뉴스검색 \
 search naver news which are divided by categories
 
