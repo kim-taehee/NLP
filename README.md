@@ -7,7 +7,7 @@ Textminig code  about meteorological(weather) subject from twitter &amp;  blog \
 박찬엽님의 코드, 카테고리별로 뉴스검색 \
 search naver news which are divided by categories
 
-## 검색어뉴스크롤러(crawler from keyword)
+## [검색어뉴스크롤러(crawler from keyword)](https://github.com/kim-taehee/datakim-KMA-textminig/blob/master/%EA%B2%80%EC%83%89%EC%96%B4%EB%89%B4%EC%8A%A4%ED%81%AC%EB%A1%A4%EB%9F%AC.R)
 박찬엽님의 코드,검색어와 기간을 입력하면 뉴스와 댓글이 csv 형태로 저장됩니다  \
 u can put keyword & startdate,enddate for crawling to naver news, then write csv file
 
