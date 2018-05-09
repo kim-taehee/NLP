@@ -17,3 +17,5 @@ u can put keyword & startdate,enddate for crawling to naver news, then write csv
 ## [트위터 크롤러(twitter crawler)](https://github.com/kim-taehee/datakim-KMA-textminig/blob/master/twitter_crawler.ipynb)
 트위터 크롤러
 
+## [기상 키워드 분석(KMA text mining)](https://github.com/kim-taehee/datakim-KMA-textminig/blob/master/%ED%8F%AD%EC%97%BC2018.R)
+빈도분석, TF_IDF, LDA ,Word_clode 등 포함
