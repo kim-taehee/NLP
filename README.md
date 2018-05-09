@@ -14,6 +14,6 @@ u can put keyword & startdate,enddate for crawling to naver news, then write csv
 (+0.1) 접근오류시 다음 페이지로 넘어가도록 코드수정 \
 (+0.1 revise) when no news any webpage, try for a while, then update date to next day
 
-## [트위터 크롤러(twitter crawler](https://github.com/kim-taehee/datakim-KMA-textminig/blob/master/twitter_crawler.ipynb)
+## [트위터 크롤러(twitter crawler)](https://github.com/kim-taehee/datakim-KMA-textminig/blob/master/twitter_crawler.ipynb)
 트위터 크롤러
 
