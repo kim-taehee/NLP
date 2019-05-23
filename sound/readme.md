@@ -1,7 +1,6 @@
 # sound
 소음에는 인간이 들을 수 있는 hz범위내에서는 hz가 덜 중요함
-
-
+Here are preprocessing(FFT,Filtering,window slicing) code. after preprocessing, you need application code which you want to func.
 
 
 
